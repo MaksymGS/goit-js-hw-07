@@ -35,7 +35,30 @@ function createMarkup(arr) {
     )
     .join("");
 }
-const instance = basicLightbox.create(`
-	<h1>Dynamic Content</h1>
-	<p>You can set the content of the lightbox with JS.</p>
-`)
+
+function handlerImageClick(evt) {
+  evt.preventDefault();
+  if (evt.target === evt.currentTarget) {
+    console.log(evt.target);
+    console.log(evt.currentTarget);
+    return;
+  }
+
+  const source = evt.target.dataset.source;
+  console.log(evt.target);
+
+  const modalAlt = evt.target.getAttribute("alt");
+  console.log(modalAlt);
+  const instance = basicLightbox.create(`
+    <div class="modal">
+      <img src="${source}" alt=${modalAlt} width = "100%"/>
+          </div>
+`);
+  instance.show();
+  document.addEventListener("keydown", (evt) => {
+    console.log(evt);
+    if (evt.key === "Escape") {
+      instance.close();
+    }
+  });
+}
